@@ -44,7 +44,7 @@ class TasklistsController < ApplicationController
     @tasklist = Tasklist.find(params[:id])
     @tasklist.destroy
 
-    flash[:success] = "タスク<%= @tasklist.id %><%=  @tasklist.content %>は削除されました"
+    flash[:success] = "タスクは削除されました"
     redirect_to tasklists_url 
   end
 
