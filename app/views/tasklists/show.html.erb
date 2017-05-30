@@ -3,8 +3,11 @@
   のタスク詳細</h1>
 
 <p>
-  <%= @tasklist.content %>
+  タスク名：<%= @tasklist.content %>
 </p>
+<p>
+  ステータス：<%= @tasklist.status %>
+</P>
 
 <%= link_to "一覧に戻る", tasklists_path %>
 <%= link_to "このタスクを編集する", edit_tasklist_path(@tasklist) %>
