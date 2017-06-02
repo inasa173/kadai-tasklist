@@ -1,5 +1,12 @@
 
 <%= form_for(tasklist) do |f| %>
+  <div class="row">
+    <div class="col-xs-12, col-sm-offset-2, col-sm-8, col-md-offset-2, col-md-8, col-lg-offset-3, col-lg-6">
+      <%= render "layouts/flash_tasklists" %>
+        <%= yield %>
+     </div>
+  </div> 
+
   <% if tasklist.errors.any? %>
     <div class="alert alert-warning" id="error_explanation">
       <ul>
