@@ -1,5 +1,5 @@
 class TasklistsController < ApplicationController
-  before_action :require_user_logged_in, only: [:new, :create]
+  before_action :require_user_logged_in, only: [:show, :new, :create, :edit,]
   before_action :set_tasklist, only: [:show, :edit, :update, :destroy]
   before_action :correct_user, only: [:show, :edit, :update, :destroy]
 
