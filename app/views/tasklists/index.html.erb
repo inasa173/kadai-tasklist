@@ -1,16 +1,24 @@
-<h1>タスクの一覧</h1>
+<% if logged_in? %>
+  <p>ログイン完了ユーザ: <%= current_user.name %></p>
+  <h1>タスクの一覧</h1>
 
-<ul>
-  <% @tasklists.each do |tasklist| %>
+  <ul>
+    <% @tasklists.each do |tasklist| %>
+      <li>
+        <p>No.
+          <%= link_to tasklist.id, tasklist %>:<%= tasklist.content %>/<%= tasklist.status %>
+        </p>
+      </li>
+    <% end %>
+  </ul>
+  <%= link_to "新規タスクの投稿", new_tasklist_path %>
 
-  <li>
-    <p>No.
-    <%= link_to tasklist.id, tasklist %>:<%= tasklist.content %>/<%= tasklist.status %>
-    </p>
-  </li>
-
-  <% end %>
-</ul>
-
-<%= link_to "新規タスクの投稿", new_tasklist_path %>
+<% else %>
+  <div class="center jumbotron">
+    <div class="text-center">
+      <h1>Welcome to the Microposts</h1>
+      <%= link_to 'sign up now !!', signup_path, class: 'btn btn-lg btn-primary' %>
+    </div>
+  </div>
+<% end %>
 

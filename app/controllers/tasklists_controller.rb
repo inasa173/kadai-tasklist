@@ -1,19 +1,23 @@
 class TasklistsController < ApplicationController
+  before_action :require_user_logged_in, only: [:new, :create]
   before_action :set_tasklist, only: [:show, :edit, :update, :destroy]
+  before_action :correct_user, only: [:show, :edit, :update, :destroy]
 
   def index
-    @tasklists = Tasklist.all
+    if logged_in?
+      @tasklists = current_user.tasklists.order(created_at: :desc)
+    end
   end
 
   def show
   end
 
   def new
-    @tasklist = Tasklist.new
+    @tasklist = current_user.tasklists.build
   end
 
   def create
-    @tasklist = Tasklist.new(tasklist_params)
+    @tasklist = current_user.tasklists.build(tasklist_params)
     if @tasklist.save
       flash[:success] = "Tasklistが登録されました"
       redirect_to @tasklist
@@ -27,7 +31,6 @@ class TasklistsController < ApplicationController
   end
 
   def update
-
     if @tasklist.update(tasklist_params)
       flash[:success] = 'Tasklist は正常
 に更新されました'
@@ -40,7 +43,6 @@ class TasklistsController < ApplicationController
 
   def destroy
     @tasklist.destroy
-
     flash[:success] = "タスクは削除されました"
     redirect_to tasklists_url 
   end
@@ -52,8 +54,11 @@ class TasklistsController < ApplicationController
     params.require(:tasklist).permit(:content, :status)
   end
 
+  def correct_user
+    redirect_to root_url if @tasklist.user != current_user
+  end
+
   def set_tasklist
     @tasklist = Tasklist.find(params[:id])
   end
-
 end
