@@ -8,9 +8,6 @@ class TasklistsController < ApplicationController
     end
   end
 
-  def show
-  end
-
   def new
     @tasklist = current_user.tasklists.build
   end
@@ -24,9 +21,6 @@ class TasklistsController < ApplicationController
       flash.now[:danger] = "Tasklistの登録にしっぱいしました。もう一度やり直してください。"
       render :new
     end
-  end
-
-  def edit
   end
 
   def update
@@ -58,6 +52,6 @@ class TasklistsController < ApplicationController
   end
 
   def set_tasklist
-    @tasklist = Tasklist.find(params[:id])
+    redirect_to root_url if @tasklist != Tasklist.find(params[:id])
   end
 end
