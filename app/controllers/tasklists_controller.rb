@@ -8,6 +8,10 @@ class TasklistsController < ApplicationController
     end
   end
 
+  def show
+    redirect_to tasklists_url if @tasklist.user != current_user
+  end
+
   def new
     @tasklist = current_user.tasklists.build
   end
@@ -23,18 +27,22 @@ class TasklistsController < ApplicationController
     end
   end
 
+  def edit
+    redirect_to tasklists_url if @tasklist.user != current_user
+  end
+
   def update
-    if @tasklist.update(tasklist_params)
-      flash[:success] = 'Tasklist は正常
-に更新されました'
-      redirect_to @tasklist
-    else
-      flash.now[:danger] = 'Tasklist は更新されませんでした'
-      render :edit
-    end
+      if @tasklist.update(tasklist_params)
+        flash[:success] = 'Tasklist は正常に更新されました'
+        redirect_to @tasklist
+      else
+        flash.now[:danger] = 'Tasklist は更新されませんでした'
+        render :edit
+      end
   end
 
   def destroy
+    redirect_to tasklists_url if @tasklist.user != current_user
     @tasklist.destroy
     flash[:success] = "タスクは削除されました"
     redirect_to tasklists_url 
@@ -52,6 +60,6 @@ class TasklistsController < ApplicationController
   end
 
   def set_tasklist
-    redirect_to root_url if @tasklist != Tasklist.find(params[:id])
+    @tasklist = Tasklist.find(params[:id])
   end
 end
